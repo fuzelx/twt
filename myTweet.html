@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyPro Personal App</title>
+</head>
+<style>
+     .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+    .tweet-input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .tweet-btn {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .tweet {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+    }
+</style>
+<body>
+    <div class="container">
+        <h2>Tweet App</h2>
+        <input type="text" id="tweetInput" class="tweet-input" placeholder="Write your tweet">
+        <button onclick="postTweet()" class="tweet-btn">Post</button>
+        <div id="tweetContainer"></div>
+      </div>
+    
+      <!-- Include the Firebase JavaScript SDK -->
+      <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-database.js"></script>
+    
+      <script>
+        // Initialize Firebase with your project credentials
+        var firebaseConfig = {
+          apiKey: "AIzaSyAR9K4srtrYX1GZab0hMYNnr9veCMPQyvs",
+          authDomain: "personal-8c89a.firebaseapp.com",
+          databaseURL: "https://personal-8c89a-default-rtdb.firebaseio.com",
+          projectId: "personal-8c89a",
+          storageBucket: "personal-8c89a.appspot.com",
+          messagingSenderId: "100544596500",
+          appId: "1:100544596500:web:bfed2dae8dd764cc1fb501"
+        };
+        firebase.initializeApp(firebaseConfig);
+    
+        // Get a reference to the Firebase Realtime Database
+        var database = firebase.database();
+    
+        function postTweet() {
+          var tweetInput = document.getElementById("tweetInput");
+    
+          // Generate a unique key for the new tweet
+          var newTweetKey = database.ref().child('tweets').push().key;
+    
+          // Create the data object for the new tweet
+          var newTweetData = {
+            content: tweetInput.value
+          };
+    
+          // Save the new tweet to the database
+          database.ref('tweets/' + newTweetKey).set(newTweetData);
+    
+          // Clear the tweet input
+          tweetInput.value = "";
+        }
+    
+        // Retrieve and display the tweets from the database
+        var tweetContainer = document.getElementById("tweetContainer");
+        database.ref('tweets').on('child_added', function(snapshot) {
+          var tweet = snapshot.val().content;
+    
+          // Create a new tweet element
+          var tweetElement = document.createElement("div");
+          tweetElement.className = "tweet";
+          tweetElement.innerText = tweet;
+    
+          // Append the tweet to the tweet container
+          tweetContainer.appendChild(tweetElement);
+        });
+      </script>
+    </body>
+    </html>
+</body>
+</html>
