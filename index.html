@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HyPro Personal App</title>
+    <title>What happend</title>
 </head>
 <style>
      .container {
@@ -13,16 +13,25 @@
       border: 1px solid #ccc;
     }
     .tweet-input {
-      width: 100%;
+      width: 80%;
+      border-radius: 15px;
+      padding: 15px;
       margin-bottom: 10px;
+      border: rgb(197, 197, 197) 1px solid;
     }
     .tweet-btn {
       padding: 10px 20px;
-      background-color: #4CAF50;
+      background-color: #2997ff;
       color: #fff;
       border: none;
+      box-shadow: 0px 9px 50px -4px rgba(41,151,255,0.48);
+-webkit-box-shadow: 0px 9px 50px -4px rgba(41,151,255,0.48);
+-moz-box-shadow: 0px 9px 50px -4px rgba(41,151,255,0.48);
+      border-radius: 10px;
+      margin: 10px;
       cursor: pointer;
     }
+    
     .tweet {
       margin-bottom: 10px;
       padding: 10px;
@@ -32,8 +41,8 @@
 </style>
 <body>
     <div class="container">
-        <h2>Tweet App</h2>
-        <input type="text" id="tweetInput" class="tweet-input" placeholder="Write your tweet">
+        <h2>Gali-Galoch App</h2>
+        <input type="text" id="tweetInput" class="tweet-input" placeholder="something happend?">
         <button onclick="postTweet()" class="tweet-btn">Post</button>
         <div id="tweetContainer"></div>
       </div>
@@ -76,19 +85,20 @@
           tweetInput.value = "";
         }
     
-        // Retrieve and display the tweets from the database
-        var tweetContainer = document.getElementById("tweetContainer");
-        database.ref('tweets').on('child_added', function(snapshot) {
-          var tweet = snapshot.val().content;
-    
-          // Create a new tweet element
-          var tweetElement = document.createElement("div");
-          tweetElement.className = "tweet";
-          tweetElement.innerText = tweet;
-    
-          // Append the tweet to the tweet container
-          tweetContainer.appendChild(tweetElement);
-        });
+       // Retrieve and display the tweets from the database
+var tweetContainer = document.getElementById("tweetContainer");
+database.ref('tweets').on('child_added', function(snapshot) {
+  var tweet = snapshot.val().content;
+
+  // Create a new tweet element
+  var tweetElement = document.createElement("div");
+  tweetElement.className = "tweet";
+  tweetElement.innerText = tweet;
+
+  // Append the tweet to the tweet container
+  tweetContainer.appendChild(tweetElement);
+});
+
       </script>
     </body>
     </html>
